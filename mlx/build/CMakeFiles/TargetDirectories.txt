@@ -1,0 +1,7 @@
+/home/SubLuck/Desktop/CUB4DD/mlx/build/CMakeFiles/mlx42.dir
+/home/SubLuck/Desktop/CUB4DD/mlx/build/CMakeFiles/edit_cache.dir
+/home/SubLuck/Desktop/CUB4DD/mlx/build/CMakeFiles/rebuild_cache.dir
+/home/SubLuck/Desktop/CUB4DD/mlx/build/CMakeFiles/list_install_components.dir
+/home/SubLuck/Desktop/CUB4DD/mlx/build/CMakeFiles/install.dir
+/home/SubLuck/Desktop/CUB4DD/mlx/build/CMakeFiles/install/local.dir
+/home/SubLuck/Desktop/CUB4DD/mlx/build/CMakeFiles/install/strip.dir
