@@ -6,7 +6,7 @@
 /*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 18:12:55 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/09/30 18:43:23 by mbarhoun         ###   ########.fr       */
+/*   Updated: 2025/11/19 11:43:08 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,16 @@ void	t_file_free(t_file *file)
 void	free_all(t_config *config, t_file *file)
 {
 	t_file_free(file);
-	free_rgb(config->floor_color);
-	free_rgb(config->ceiling_color);
-	p1char(&config->txt->no_texture);
-	p1char(&config->txt->so_texture);
-	p1char(&config->txt->we_texture);
-	p1char(&config->txt->ea_texture);
-	free(config->txt);
-	p2char(&config->map);
+	if (config)
+	{
+		free_rgb(config->floor_color);
+		free_rgb(config->ceiling_color);
+		p1char(&config->txt->no_texture);
+		p1char(&config->txt->so_texture);
+		p1char(&config->txt->we_texture);
+		p1char(&config->txt->ea_texture);
+		free(config->txt);
+		config->txt = NULL;
+		p2char(&config->map);
+	}
 }

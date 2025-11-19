@@ -1,6 +1,6 @@
 CC = cc
 
-##CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 NAME = cub3d
 
@@ -38,6 +38,8 @@ SRC = 	cub3d.c								\
 		./raycasting/raycasting2.c			\
 		./raycasting/render.c				\
 		./raycasting/win_mlx.c				\
+		./raycasting/textures.c				\
+		./raycasting/floor_ceiling.c		\
 
 HDR = 	cub3d.h	./raycasting/raycasting.h	\
 
@@ -64,7 +66,7 @@ HDR_LIB = ./libft/libft.h
 all: $(NAME)
 
 $(NAME): $(OBJ) $(OBJ_GNL) $(LIB)
-	$(CC) $(CFLAGS) $(OBJ) $(OBJ_GNL) $(LIB) ./mlx/build/libmlx42.a -Iinclude -ldl -lglfw -lm -lGL -o $@
+	$(CC) $(CFLAGS) $(OBJ) $(OBJ_GNL) $(LIB)  ./mlx/build/libmlx42.a -framework Cocoa -framework OpenGL -framework IOKit -Iinclude -lglfw -L"/Users/mbarhoun/.brew/opt/glfw/lib/" -o $@
 
 ./parsing/get_next_line/%.o: ./parsing/get_next_line/%.c $HDR_GNL
 	$(CC) $(CFALGS) -c $< -o $@

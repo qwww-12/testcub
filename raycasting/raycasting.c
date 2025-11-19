@@ -6,7 +6,7 @@
 /*   By: mozahnou <mozahnou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 16:41:36 by mozahnou          #+#    #+#             */
-/*   Updated: 2025/10/19 11:59:22 by mozahnou         ###   ########.fr       */
+/*   Updated: 2025/11/19 02:20:40 by mozahnou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,26 @@ void	perform_dda(t_config *cfg, t_ray *ray)
 	}
 }
 
-double	calc_wall_dist(t_ray *ray)
+double	calc_wall_dist(t_config *cfg, t_ray *ray)
 {
+	double	perp;
+
 	if (ray->side == 0)
-		return (ray->side_dist_x - ray->delta_dist_x);
+		perp = ((double)ray->map_x - cfg->player.x 
+				+ (1.0 - ray->step_x) / 2.0) / ray->dir_x;
 	else
-		return (ray->side_dist_y - ray->delta_dist_y);
+		perp = ((double)ray->map_y - cfg->player.y 
+				+ (1.0 - ray->step_y) / 2.0) / ray->dir_y;
+	ray->perp_wall_dist = perp;
+	return (perp);
 }
 
 void	calc_draw_bounds(double wall_dist, int *start, int *end)
 {
 	int	line_height;
 
+	if (wall_dist < 0.01)
+		wall_dist = 0.01;
 	line_height = (int)(WIN_H / wall_dist);
 	*start = -line_height / 2 + WIN_H / 2;
 	if (*start < 0)
@@ -58,24 +66,21 @@ void	calc_draw_bounds(double wall_dist, int *start, int *end)
 
 void	cast_single_ray(t_config *cfg, int x)
 {
-	t_ray		ray;
-	double		wall_dist;
-	int			draw_start;
-	int			draw_end;
-	uint32_t	color;
+	t_ray	ray;
+	double	perp_dist;
+	int		draw_start;
+	int		draw_end;
 
 	init_ray_direction(cfg, x, &ray);
 	init_delta_dist(&ray);
 	init_step_x(cfg, &ray);
 	init_step_y(cfg, &ray);
 	perform_dda(cfg, &ray);
-	wall_dist = calc_wall_dist(&ray);
-	calc_draw_bounds(wall_dist, &draw_start, &draw_end);
-	if (ray.side == 1)
-		color = 0xFF0000FF;
-	else
-		color = 0x0000FFFF;
-	draw_vertical_line(cfg, x, draw_start, draw_end, color);
+	perp_dist = calc_wall_dist(cfg, &ray);
+	calc_draw_bounds(perp_dist, &draw_start, &draw_end);
+	ray.hit_x = cfg->player.x + ray.dir_x * ray.perp_wall_dist;
+	ray.hit_y = cfg->player.y + ray.dir_y * ray.perp_wall_dist;
+	draw_vertical_line(cfg, x, draw_start, draw_end, &ray);
 }
 
 void	raycasting(t_config *cfg)

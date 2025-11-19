@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mozahnou <mozahnou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mbarhoun <mbarhoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 16:22:53 by mozahnou          #+#    #+#             */
-/*   Updated: 2025/10/14 13:34:21 by mozahnou         ###   ########.fr       */
+/*   Updated: 2025/11/19 11:36:02 by mbarhoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,11 @@ int	is_wall(t_config *cfg, double x, double y)
 	int		mx;
 	int		my;
 
-	m = (1.0 / 6.0) * 0.5;
+	m = 0.1;
 	i = 0;
 	while (i < 4)
 	{
-		if (i == 0)
-			mx = (int)(x - m);
-		else if (i == 1)
-			mx = (int)(x + m);
-		else if (i == 2)
+		if (i == 0 || i == 2)
 			mx = (int)(x - m);
 		else
 			mx = (int)(x + m);

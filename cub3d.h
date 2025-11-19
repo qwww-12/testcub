@@ -6,17 +6,18 @@
 /*   By: mozahnou <mozahnou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 21:18:06 by mbarhoun          #+#    #+#             */
-/*   Updated: 2025/10/19 11:55:53 by mozahnou         ###   ########.fr       */
+/*   Updated: 2025/11/16 12:19:02 by mozahnou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# include <math.h>
+# include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <fcntl.h>
 # include <stdbool.h>
 # include "./libft/libft.h"
 # include "./parsing/parsing.h"
@@ -37,6 +38,10 @@ typedef struct s_textures
 	char	*so_texture;
 	char	*we_texture;
 	char	*ea_texture;
+	mlx_texture_t			*no_path;
+	mlx_texture_t			*so_path;
+	mlx_texture_t			*we_path;
+	mlx_texture_t			*ea_path;
 }	t_textures;
 
 typedef struct s_player {
@@ -63,6 +68,9 @@ typedef struct s_ray
 	int		step_x;
 	int		step_y;
 	int		side;
+	double	perp_wall_dist;  // ADD THIS - perpendicular distance (corrected)
+	double	hit_x;           // ADD THIS - exact hit position on wall
+	double	hit_y;  
 }	t_ray;
 
 typedef struct s_config
@@ -80,8 +88,10 @@ typedef struct s_config
 	mlx_t		*mlx;
     mlx_image_t	*img;   
 	t_player	player;
-	t_ray	*rays;
-    int		num_rays;
+	t_ray		*rays;
+    int			num_rays;
+	uint32_t 	color;
+	
 }	t_config;
 
 #endif
